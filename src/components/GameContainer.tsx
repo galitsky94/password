@@ -26,24 +26,24 @@ const GameContainer = () => {
   // Calculate trajectory points, allowing for off-screen travel
   const calculateTrajectory = () => {
     const points: Array<{ x: number, y: number }> = [];
-    const numPoints = 200; // Increased points for longer potential trajectories
+    const numPoints = 200;
 
-    const range = (power / 100) * 1500; // Allow range to go beyond 1000px
-    const maxHeight = 10 + (scale / 100) * 600; // Allow maxHeight to be higher
-    const gravityFactor = 1 + (gravity / 25);
+    const range = (power / 100) * 1500;
+    const maxHeight = 10 + (scale / 100) * 600;
+
+    // Adjust gravityFactor for a more balanced but still impactful effect.
+    // Range for gravityFactor will be from 1 (gravity 0) to 6 (gravity 100)
+    // This provides a good curve without making it overly flat at max gravity.
+    const gravityFactor = 1 + (gravity / 100) * 5;
 
     for (let i = 0; i <= numPoints; i++) {
       const t = i / numPoints;
       const x = t * range;
 
-      // No longer breaking if x > 1000, allow it to go off-screen
+      let y = 4 * maxHeight * t * (1 - t); // Standard parabolic shape
+      y = y / gravityFactor; // Apply linear gravity effect
 
-      let y = 4 * maxHeight * t * (1 - t);
-      y = y / gravityFactor;
-
-      // Clamping y to keep it within reasonable visual bounds for the SVG, even if it lands off-screen
-      const clampedY = Math.max(-200, Math.min(550, y)); // Allow y to go below 0 or above canvas briefly
-
+      const clampedY = Math.max(-200, Math.min(550, y));
       points.push({ x, y: 350 - clampedY });
     }
 
