@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 const GameContainer = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
   // Game control states
   const [power, setPower] = useState(50);
@@ -113,11 +112,6 @@ const GameContainer = () => {
     setAnimatedTrajectory([]);
   };
 
-  // Toggle password visibility
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
   // Handle login attempt
   const handleLogin = () => {
     alert(`Login attempt with username: ${username} and password: ${password}`);
@@ -163,7 +157,7 @@ const GameContainer = () => {
         {/* Username and Password */}
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-            <label htmlFor="username" className="text-gray-700 w-28 font-medium">
+            <label htmlFor="username" className="text-gray-700 w-24 font-medium">
               Username:
             </label>
             <input
@@ -171,21 +165,21 @@ const GameContainer = () => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-64 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your username"
             />
           </div>
 
           <div className="flex items-center space-x-2">
-            <label htmlFor="password" className="text-gray-700 w-28 font-medium">
+            <label htmlFor="password" className="text-gray-700 w-24 font-medium">
               Password:
             </label>
             <input
-              type={showPassword ? 'text' : 'password'}
+              type="text"
               id="password"
               value={password}
               readOnly
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-64 px-2 py-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Fire to add letters"
             />
           </div>
@@ -252,7 +246,7 @@ const GameContainer = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <button
             type="button"
             onClick={handleLaunch}
@@ -261,7 +255,6 @@ const GameContainer = () => {
           >
             Launch!
           </button>
-
           <button
             type="button"
             onClick={handleClearPassword}
@@ -270,16 +263,6 @@ const GameContainer = () => {
           >
             Clear
           </button>
-
-          <button
-            type="button"
-            onClick={handleTogglePassword}
-            disabled={isAnimating}
-            className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-          >
-            Password
-          </button>
-
           <button
             type="button"
             onClick={handleLogin}
